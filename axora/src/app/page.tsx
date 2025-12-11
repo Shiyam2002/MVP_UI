@@ -1,10 +1,8 @@
-import Background from "@/src/components/ui/background";
+import Login04 from "../components/login";
 
 
 export default function Home() {
   return (
-    <Background>
-      <div className="div">Hi</div>
-    </Background>
+    <Login04 />
   );
 }
