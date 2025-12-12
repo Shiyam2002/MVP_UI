@@ -239,6 +239,7 @@ const SmoothWavyCanvas = ({
 
         // No energy field effects - removed completely
 
+        requestIdRef.current = requestAnimationFrame(animate)
     }, [backgroundColor, primaryColor, secondaryColor, accentColor, lineOpacity, animationSpeed])
 
     useEffect(() => {
@@ -270,16 +271,6 @@ const SmoothWavyCanvas = ({
             energyFields.current = []
         }
     }, [animate, resizeCanvas, handleMouseMove, handleMouseDown, handleMouseUp])
-
-    useEffect(() => {
-        requestIdRef.current = requestAnimationFrame(animate)
-
-        return () => {
-            if (requestIdRef.current) {
-                cancelAnimationFrame(requestIdRef.current)
-            }
-        }
-    }, [animate])
 
     return (
         <div className="absolute inset-0 w-full h-full overflow-hidden" style={{ backgroundColor }}>
