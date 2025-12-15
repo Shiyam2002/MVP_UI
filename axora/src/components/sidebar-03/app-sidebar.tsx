@@ -11,20 +11,15 @@ import {
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import {
-  Activity,
-  DollarSign,
-  Home,
-  Infinity,
-  LinkIcon,
-  Package2,
-  Percent,
-  PieChart,
+  Brain,
+  Files,
+  MessageSquare,
   Settings,
-  ShoppingBag,
-  Sparkles,
-  Store,
-  TrendingUp,
   Users,
+  LayoutDashboard,
+  FolderKanban,
+  FileText,
+  BarChart3,
 } from "lucide-react";
 import { Logo } from "@/src/components/sidebar-03/logo";
 import type { Route } from "./nav-main";
@@ -32,148 +27,87 @@ import DashboardNavigation from "@/src/components/sidebar-03/nav-main";
 import { NotificationsPopover } from "@/src/components/sidebar-03/nav-notifications";
 import { TeamSwitcher } from "@/src/components/sidebar-03/team-switcher";
 
+// Example notifications
 const sampleNotifications = [
   {
     id: "1",
     avatar: "/avatars/01.png",
-    fallback: "OM",
-    text: "New order received.",
+    fallback: "SK",
+    text: "Workspace 'Legal Review' updated.",
     time: "10m ago",
   },
   {
     id: "2",
     avatar: "/avatars/02.png",
-    fallback: "JL",
-    text: "Server upgrade completed.",
+    fallback: "JD",
+    text: "New document uploaded to Research workspace.",
     time: "1h ago",
   },
   {
     id: "3",
     avatar: "/avatars/03.png",
-    fallback: "HH",
-    text: "New user signed up.",
+    fallback: "AR",
+    text: "AI summary generated successfully.",
     time: "2h ago",
   },
 ];
 
+// 🧠 Contextual routes for your Chat + Document + LLM platform
 const dashboardRoutes: Route[] = [
   {
-    id: "home",
-    title: "Home",
-    icon: <Home className="size-4" />,
+    id: "personal-ai",
+    title: "My AI Space",
+    icon: <Brain className="size-4" />,
     link: "/me/chat",
   },
   {
-    id: "products",
-    title: "Products",
-    icon: <Package2 className="size-4" />,
-    link: "#",
-    subs: [
-      {
-        title: "Catalogue",
-        link: "#",
-        icon: <Package2 className="size-4" />,
-      },
-      {
-        title: "Checkout Links",
-        link: "#",
-        icon: <LinkIcon className="size-4" />,
-      },
-      {
-        title: "Discounts",
-        link: "#",
-        icon: <Percent className="size-4" />,
-      },
-    ],
+    id: "workspaces",
+    title: "Workspaces",
+    icon: <FolderKanban className="size-4" />,
+    link: "/workspace",
   },
   {
-    id: "usage-billing",
-    title: "Usage Billing",
-    icon: <PieChart className="size-4" />,
-    link: "#",
-    subs: [
-      {
-        title: "Meters",
-        link: "#",
-        icon: <PieChart className="size-4" />,
-      },
-      {
-        title: "Events",
-        link: "#",
-        icon: <Activity className="size-4" />,
-      },
-    ],
+    id: "documents",
+    title: "Documents",
+    icon: <Files className="size-4" />,
+    link: "/workspace/documents",
   },
   {
-    id: "benefits",
-    title: "Benefits",
-    icon: <Sparkles className="size-4" />,
-    link: "#",
+    id: "chat",
+    title: "Chat Rooms",
+    icon: <MessageSquare className="size-4" />,
+    link: "/workspace/chat",
   },
   {
-    id: "customers",
-    title: "Customers",
+    id: "insights",
+    title: "Insights",
+    icon: <BarChart3 className="size-4" />,
+    link: "/workspace/insights",
+  },
+  {
+    id: "decisions",
+    title: "Decisions",
+    icon: <FileText className="size-4" />,
+    link: "/workspace/decisions",
+  },
+  {
+    id: "members",
+    title: "Members",
     icon: <Users className="size-4" />,
-    link: "#",
-  },
-  {
-    id: "sales",
-    title: "Sales",
-    icon: <ShoppingBag className="size-4" />,
-    link: "#",
-    subs: [
-      {
-        title: "Orders",
-        link: "#",
-        icon: <ShoppingBag className="size-4" />,
-      },
-      {
-        title: "Subscriptions",
-        link: "#",
-        icon: <Infinity className="size-4" />,
-      },
-    ],
-  },
-  {
-    id: "storefront",
-    title: "Storefront",
-    icon: <Store className="size-4" />,
-    link: "#",
-  },
-  {
-    id: "analytics",
-    title: "Analytics",
-    icon: <TrendingUp className="size-4" />,
-    link: "#",
-  },
-  {
-    id: "finance",
-    title: "Finance",
-    icon: <DollarSign className="size-4" />,
-    link: "#",
-    subs: [
-      { title: "Incoming", link: "#" },
-      { title: "Outgoing", link: "#" },
-      { title: "Payout Account", link: "#" },
-    ],
+    link: "/workspace/members",
   },
   {
     id: "settings",
     title: "Settings",
     icon: <Settings className="size-4" />,
-    link: "#",
-    subs: [
-      { title: "General", link: "#" },
-      { title: "Webhooks", link: "#" },
-      { title: "Custom Fields", link: "#" },
-    ],
+    link: "/workspace/settings",
   },
 ];
 
 const teams = [
-  { id: "1", name: "Alpha Inc.", logo: Logo, plan: "Free" },
-  { id: "2", name: "Beta Corp.", logo: Logo, plan: "Free" },
-  { id: "3", name: "Gamma Tech", logo: Logo, plan: "Free" },
+  { id: "1", name: "Legal Review", logo: Logo, plan: "Workspace" },
+  { id: "2", name: "Research Analysis", logo: Logo, plan: "Workspace" },
+  { id: "3", name: "Contract AI", logo: Logo, plan: "Workspace" },
 ];
 
 export function DashboardSidebar() {
@@ -182,6 +116,7 @@ export function DashboardSidebar() {
 
   return (
     <Sidebar variant="floating" collapsible="icon">
+      {/* --- Header --- */}
       <SidebarHeader
         className={cn(
           "flex md:pt-3.5",
@@ -194,7 +129,7 @@ export function DashboardSidebar() {
           <Logo className="h-8 w-8" />
           {!isCollapsed && (
             <span className="font-semibold text-black dark:text-white">
-              Acme
+              Axora
             </span>
           )}
         </a>
@@ -213,9 +148,13 @@ export function DashboardSidebar() {
           <SidebarTrigger />
         </motion.div>
       </SidebarHeader>
+
+      {/* --- Content --- */}
       <SidebarContent className="gap-4 px-2 py-4">
         <DashboardNavigation routes={dashboardRoutes} />
       </SidebarContent>
+
+      {/* --- Footer --- */}
       <SidebarFooter className="px-2">
         <TeamSwitcher teams={teams} />
       </SidebarFooter>
