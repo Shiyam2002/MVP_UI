@@ -16,7 +16,6 @@ import {
   MessageSquare,
   Settings,
   Users,
-  LayoutDashboard,
   FolderKanban,
   FileText,
   BarChart3,
