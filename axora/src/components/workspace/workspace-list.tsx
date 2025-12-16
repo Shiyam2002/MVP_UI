@@ -2,15 +2,20 @@
 
 import React from "react";
 import Link from "next/link";
-import { Plus, Files, MessageSquare, BarChart3, FolderKanban } from "lucide-react";
+import {
+    Plus,
+    Files,
+    MessageSquare,
+    BarChart3,
+    FolderKanban,
+} from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { Card, CardContent } from "@/src/components/ui/card";
 
-
-
-type Workspace = {
+export type Workspace = {
     id: string;
     name: string;
+    slug: string; // ✅ REQUIRED for routing
     description?: string;
     documentsCount: number;
     chatsCount: number;
@@ -36,23 +41,24 @@ export function WorkspaceList({ workspaces }: WorkspaceListProps) {
                 <div>
                     <h2 className="text-xl font-semibold">No workspaces yet</h2>
                     <p className="mt-1 text-sm text-muted-foreground">
-                        Create a workspace to organize documents, chat with AI, and
-                        generate insights.
+                        Create a workspace to organize documents, chat with AI, and generate insights.
                     </p>
                 </div>
 
-                <Button>
-                    <Plus className="mr-2 h-4 w-4" />
-                    Create Workspace
+                <Button
+                    size="icon"
+                    className="h-12 w-12 rounded-full bg-black text-white hover:bg-black/90 transition-all"
+                    aria-label="Create workspace"
+                >
+                    <Plus className="h-6 w-6" />
                 </Button>
             </div>
         );
     }
 
-    // 🟢 WORKSPACE CARDS
+    // 🟢 WORKSPACE CARDS (UNCHANGED DESIGN)
     return (
         <div className="space-y-6">
-            {/* Header */}
             {/* Header */}
             <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
                 <div>
@@ -64,9 +70,13 @@ export function WorkspaceList({ workspaces }: WorkspaceListProps) {
                     </p>
                 </div>
 
+                {/* Floating Create Workspace Button */}
                 <Button
                     size="icon"
                     className="
+    fixed
+    top-10 right-6
+    z-40
     h-12 w-12 rounded-full
     bg-black text-white
     hover:bg-black/90
@@ -80,22 +90,21 @@ export function WorkspaceList({ workspaces }: WorkspaceListProps) {
 
             </div>
 
-
             {/* Workspace grid */}
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {workspaces.map((workspace) => (
                     <Link
                         key={workspace.id}
-                        href={`/workspace/${workspace.id}`}
+                        href={`/workspace/${workspace.slug}`} // ✅ SLUG USED (FIX)
                         className="group relative"
                     >
                         <Card
                             className="
-      h-full overflow-hidden rounded-2xl border 
-      bg-background transition-all
-      hover:-translate-y-0.5 hover:shadow-lg
-      hover:border-primary/40
-    "
+                h-full overflow-hidden rounded-2xl border 
+                bg-background transition-all
+                hover:-translate-y-0.5 hover:shadow-lg
+                hover:border-primary/40
+              "
                         >
                             <CardContent className="flex h-full flex-col gap-5 p-5">
                                 {/* Top section */}
@@ -142,7 +151,6 @@ export function WorkspaceList({ workspaces }: WorkspaceListProps) {
                             </CardContent>
                         </Card>
                     </Link>
-
                 ))}
             </div>
         </div>

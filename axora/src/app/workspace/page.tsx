@@ -1,10 +1,12 @@
 import React from "react";
-import { WorkspaceList } from "@/src/components/workspace/workspace-list";
+import { WorkspaceList, Workspace } from "@/src/components/workspace/workspace-list";
+import { createWorkspaceSlug } from "@/src/lib/slug";
 
-const mockWorkspaces = [
+const mockWorkspaces: Workspace[] = [
   {
     id: "1",
     name: "Contract Review – Q4",
+    slug: createWorkspaceSlug("Contract Review – Q4"),
     description: "Legal risk analysis for vendor contracts",
     documentsCount: 12,
     chatsCount: 4,
@@ -14,6 +16,7 @@ const mockWorkspaces = [
   {
     id: "2",
     name: "Research Analysis",
+    slug: createWorkspaceSlug("Research Analysis"),
     description: "AI-assisted research on LLM evaluation",
     documentsCount: 8,
     chatsCount: 3,
