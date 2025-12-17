@@ -24,7 +24,15 @@ import { Logo } from "@/src/components/sidebar-03/logo";
 import type { Route } from "./nav-main";
 import DashboardNavigation from "@/src/components/sidebar-03/nav-main";
 import { NotificationsPopover } from "@/src/components/sidebar-03/nav-notifications";
-import { TeamSwitcher } from "@/src/components/sidebar-03/team-switcher";
+import { NavUser } from "./nav-user";
+
+const data = {
+  user: {
+    name: "ephraim",
+    email: "ephraim@blocks.so",
+    avatar: "/avatar-01.png",
+  },
+};
 
 // Example notifications
 const sampleNotifications = [
@@ -103,12 +111,6 @@ const dashboardRoutes: Route[] = [
   },
 ];
 
-const teams = [
-  { id: "1", name: "Legal Review", logo: Logo, plan: "Workspace" },
-  { id: "2", name: "Research Analysis", logo: Logo, plan: "Workspace" },
-  { id: "3", name: "Contract AI", logo: Logo, plan: "Workspace" },
-];
-
 export function DashboardSidebar() {
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
@@ -155,7 +157,7 @@ export function DashboardSidebar() {
 
       {/* --- Footer --- */}
       <SidebarFooter className="px-2">
-        <TeamSwitcher teams={teams} />
+        <NavUser user={data.user} />
       </SidebarFooter>
     </Sidebar>
   );
