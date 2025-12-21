@@ -1,8 +1,10 @@
+import { getCookie } from "./cookies";
+
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 function getToken() {
     if (typeof window === "undefined") return null;
-    return localStorage.getItem("token");
+    return getCookie("token");
 }
 
 async function request(method: string, path: string, data: unknown = null) {
