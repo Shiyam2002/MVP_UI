@@ -1,29 +1,20 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/src/components/ui/button";
 import {
     Plus,
     Upload,
     MessageSquare,
     FileText,
     Lightbulb,
+    ArrowUpRight,
 } from "lucide-react";
+import { Button } from "@/src/components/ui/button";
+import { cn } from "@/src/lib/utils";
 
-type ChatRoom = {
-    id: string;
-    name: string;
-};
-
-type Document = {
-    id: string;
-    name: string;
-};
-
-type Insight = {
-    id: string;
-    title: string;
-};
+type ChatRoom = { id: string; name: string };
+type Document = { id: string; name: string };
+type Insight = { id: string; title: string };
 
 interface WorkspaceCanvasProps {
     workspaceName: string;
@@ -43,106 +34,144 @@ export function WorkspaceCanvas({
     return (
         <div className="space-y-10">
             {/* ================= HEADER ================= */}
-            <div className="space-y-2">
-                <h1 className="text-2xl font-semibold tracking-tight">
+            <header className="space-y-3">
+                <h1 className="text-3xl font-semibold tracking-tight">
                     {workspaceName}
                 </h1>
+
                 {description && (
-                    <p className="text-sm text-muted-foreground max-w-2xl">
+                    <p className="max-w-3xl text-sm text-muted-foreground">
                         {description}
                     </p>
                 )}
+
+                <div className="h-px w-full bg-gradient-to-r from-primary/40 to-transparent" />
+            </header>
+
+            {/* ================= QUICK ACTIONS ================= */}
+            <div className="flex gap-3">
+                <ActionButton icon={Plus} label="New chat room" />
+                <ActionButton icon={Upload} label="Upload document" />
             </div>
 
-            {/* ================= ACTION BAR ================= */}
-            <div className="flex flex-wrap gap-3">
-                <Button className="rounded-full bg-black text-white hover:bg-black/90">
-                    <Plus className="mr-2 h-4 w-4" />
-                    New Chat Room
-                </Button>
+            {/* ================= MAIN LAYOUT ================= */}
+            <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr]">
+                {/* ================= CHAT ROOMS (PRIMARY) ================= */}
+                <Surface
+                    title="Chat Rooms"  
+                    icon={MessageSquare}
+                    primary
+                    emptyLabel="Start conversations with your workspace knowledge"
+                >
+                    {chatRooms.map((room) => (
+                        <InteractiveRow key={room.id} label={room.name} />
+                    ))}
+                </Surface>
 
-                <Button variant="outline" className="rounded-full">
-                    <Upload className="mr-2 h-4 w-4" />
-                    Upload Document
-                </Button>
-            </div>
-
-            {/* ================= CHAT ROOMS ================= */}
-            <section className="space-y-3">
-                <div className="flex items-center justify-between">
-                    <h2 className="text-sm font-medium text-muted-foreground">
-                        Chat Rooms
-                    </h2>
-                </div>
-
-                {chatRooms.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">
-                        No chat rooms yet. Create one to start discussing with AI.
-                    </p>
-                ) : (
-                    <ul className="space-y-2">
-                        {chatRooms.map((chat) => (
-                            <li
-                                key={chat.id}
-                                className="flex items-center gap-2 rounded-lg border px-3 py-2 text-sm hover:bg-muted/40"
-                            >
-                                <MessageSquare className="h-4 w-4 text-muted-foreground" />
-                                {chat.name}
-                            </li>
-                        ))}
-                    </ul>
-                )}
-            </section>
-
-            {/* ================= DOCUMENTS ================= */}
-            <section className="space-y-3">
-                <h2 className="text-sm font-medium text-muted-foreground">
-                    Documents
-                </h2>
-
-                {documents.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">
-                        No documents uploaded yet.
-                    </p>
-                ) : (
-                    <ul className="space-y-2">
+                {/* ================= SECONDARY COLUMN ================= */}
+                <div className="space-y-8">
+                    <Surface
+                        title="Documents"
+                        icon={FileText}
+                        emptyLabel="Drop files to build workspace context"
+                    >
                         {documents.map((doc) => (
-                            <li
-                                key={doc.id}
-                                className="flex items-center gap-2 rounded-lg border px-3 py-2 text-sm hover:bg-muted/40"
-                            >
-                                <FileText className="h-4 w-4 text-muted-foreground" />
-                                {doc.name}
-                            </li>
+                            <InteractiveRow key={doc.id} label={doc.name} />
                         ))}
-                    </ul>
-                )}
-            </section>
+                    </Surface>
 
-            {/* ================= INSIGHTS ================= */}
-            <section className="space-y-3">
-                <h2 className="text-sm font-medium text-muted-foreground">
-                    Insights
-                </h2>
-
-                {insights.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">
-                        No insights generated yet.
-                    </p>
-                ) : (
-                    <ul className="space-y-2">
-                        {insights.map((insight) => (
-                            <li
-                                key={insight.id}
-                                className="flex items-center gap-2 rounded-lg border px-3 py-2 text-sm hover:bg-muted/40"
-                            >
-                                <Lightbulb className="h-4 w-4 text-muted-foreground" />
-                                {insight.title}
-                            </li>
+                    <Surface
+                        title="Insights"
+                        icon={Lightbulb}
+                        emptyLabel="AI-generated insights will appear here"
+                    >
+                        {insights.map((i) => (
+                            <InteractiveRow key={i.id} label={i.title} />
                         ))}
-                    </ul>
-                )}
-            </section>
+                    </Surface>
+                </div>
+            </div>
         </div>
+    );
+}
+
+/* ================= SURFACE ================= */
+
+function Surface({
+    title,
+    icon: Icon,
+    primary,
+    emptyLabel,
+    children,
+}: {
+    title: string;
+    icon: any;
+    primary?: boolean;
+    emptyLabel: string;
+    children: React.ReactNode;
+}) {
+    const hasItems = React.Children.count(children) > 0;
+
+    return (
+        <section
+            className={cn(
+                "group rounded-xl bg-muted/30 p-4 transition",
+                "hover:bg-muted/40",
+                primary && "bg-muted/40"
+            )}
+        >
+            <div className="mb-4 flex items-center gap-2">
+                <Icon className="h-4 w-4 text-muted-foreground" />
+                <h2 className="text-sm font-medium">{title}</h2>
+            </div>
+
+            {hasItems ? (
+                <div className="space-y-1">{children}</div>
+            ) : (
+                <EmptyInteractive label={emptyLabel} />
+            )}
+        </section>
+    );
+}
+
+/* ================= ROW ================= */
+
+function InteractiveRow({ label }: { label: string }) {
+    return (
+        <div className="group flex items-center justify-between rounded-lg px-3 py-2 text-sm transition hover:bg-background">
+            <span className="truncate">{label}</span>
+
+            <ArrowUpRight className="h-4 w-4 text-muted-foreground opacity-0 transition group-hover:opacity-100" />
+        </div>
+    );
+}
+
+/* ================= EMPTY ================= */
+
+function EmptyInteractive({ label }: { label: string }) {
+    return (
+        <div className="flex min-h-[72px] items-center justify-center rounded-lg border border-dashed text-center text-sm text-muted-foreground">
+            {label}
+        </div>
+    );
+}
+
+/* ================= ACTION ================= */
+
+function ActionButton({
+    icon: Icon,
+    label,
+}: {
+    icon: any;
+    label: string;
+}) {
+    return (
+        <Button
+            variant="secondary"
+            className="group gap-2 rounded-full px-4"
+        >
+            <Icon className="h-4 w-4" />
+            <span className="text-sm">{label}</span>
+        </Button>
     );
 }
