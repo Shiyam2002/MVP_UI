@@ -12,3 +12,24 @@ export interface WorkspaceResponse {
     createdAt: string;
     updatedAt: string;
 }
+
+export type ChatRoom = {
+    id: string;
+    name: string;
+};
+
+export type WorkspaceDocument = {
+    id: string;
+    name: string;
+};
+
+export type Insight = {
+    id: string;
+    title: string;
+};
+
+export type WorkspaceDetails = {
+    id: string;
+    name: string;
+    description?: string;
+};
