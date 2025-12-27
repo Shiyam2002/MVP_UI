@@ -20,6 +20,7 @@ async function request(method: string, path: string, data: unknown = null) {
         headers,
         body: data ? JSON.stringify(data) : undefined,
         cache: "no-store",
+        credentials: "include",
     });
 
     if (!res.ok) {
