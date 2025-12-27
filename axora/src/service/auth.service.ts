@@ -11,7 +11,7 @@ const REFRESH_TOKEN_KEY = "refreshToken";
 
 export const AuthService = {
     async login(payload: LoginPayload): Promise<AuthResponse> {
-        const response = await apiPost("/auth/authenticate", payload);
+        const response = await apiPost("/auth/v1/authenticate", payload);
         const { accessToken, refreshToken } = response as AuthResponse;
         
         setCookie(ACCESS_TOKEN_KEY, accessToken, 1);
@@ -21,7 +21,7 @@ export const AuthService = {
     },
 
     async signup(payload: SignupPayload): Promise<AuthResponse> {
-        const response = await apiPost("/auth/signup", payload);
+        const response = await apiPost("/auth/v1/signup", payload);
         const { accessToken, refreshToken } = response as AuthResponse;
         
         setCookie(ACCESS_TOKEN_KEY, accessToken, 1);

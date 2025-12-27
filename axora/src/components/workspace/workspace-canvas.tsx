@@ -45,7 +45,7 @@ export function WorkspaceCanvas({
                     </p>
                 )}
 
-                <div className="h-px w-full bg-gradient-to-r from-primary/40 to-transparent" />
+                <div className="h-px w-full bg-linear-to-r from-primary/40 to-transparent" />
             </header>
 
             {/* ================= QUICK ACTIONS ================= */}
