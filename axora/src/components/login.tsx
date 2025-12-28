@@ -50,9 +50,16 @@ export default function AuthPage() {
             await AuthService.login({ email, password });
             toast.success("Signed in successfully");
             router.push(next);
-        } catch (err) {
-            toast.error("Login failed");
-        } finally {
+        } catch (err: any) {
+            if (err.message === "INVALID_CREDENTIALS") {
+                toast.error("Invalid email or password");
+            } else if (err.message === "ACCOUNT_DISABLED") {
+                toast.error("Your account is disabled. Contact support.");
+            } else {
+                toast.error("Unable to sign in. Please try again.");
+            }
+        }
+        finally {
             setLoading(false);
         }
     };
