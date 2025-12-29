@@ -9,6 +9,7 @@ import {
     Lightbulb,
     ArrowUpRight,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { cn } from "@/src/lib/utils";
 
@@ -105,11 +106,12 @@ function Surface({
     children,
 }: {
     title: string;
-    icon: any;
+    icon: LucideIcon;
     primary?: boolean;
     emptyLabel: string;
     children: React.ReactNode;
 }) {
+
     const hasItems = React.Children.count(children) > 0;
 
     return (
@@ -162,7 +164,7 @@ function ActionButton({
     icon: Icon,
     label,
 }: {
-    icon: any;
+        icon: LucideIcon;
     label: string;
 }) {
     return (
