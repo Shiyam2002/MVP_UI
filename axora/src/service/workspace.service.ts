@@ -1,6 +1,6 @@
 import { apiPost, apiGet } from "../lib/api";
 import { setCookie, deleteCookie } from "../lib/cookies";
-import type { ChatRoom, createWorkspacePayload, Insight, WorkspaceDetails, WorkspaceDocument, WorkspaceResponse } from "../types/workspace";
+import type { ChatRoom, createWorkspacePayload, Insight, WorkspaceDetails, WorkspaceDocument, WorkspaceResponse } from "../types/workspace.type";
 
 export const WorkspaceService = {
 

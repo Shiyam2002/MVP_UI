@@ -4,7 +4,7 @@ import type {
     LoginPayload,
     SignupPayload,
     AuthResponse,
-} from "@/src/types/auth";
+} from "@/src/types/auth.type";
 
 const ACCESS_TOKEN_KEY = "token";
 const REFRESH_TOKEN_KEY = "refreshToken";
