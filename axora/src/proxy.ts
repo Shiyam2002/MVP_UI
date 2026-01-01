@@ -35,7 +35,7 @@ export function proxy(req: NextRequest) {
         const token = req.cookies.get("token")?.value;
 
         // protected route example set (you can use matcher config instead)
-        const protectedPrefixes = ["/dashboard", "/documents", "/workspaces", "/settings"];
+        const protectedPrefixes = ["/dashboard", "/documents", "/workspace", "/settings"];
 
         // If request is to a protected route and there's no token -> redirect to /login
         if (!token && protectedPrefixes.some((p) => pathname.startsWith(p))) {
@@ -69,7 +69,7 @@ export const config = {
         */
         "/dashboard/:path*",
         "/documents/:path*",
-        "/workspaces/:path*",
+        "/workspace/:path*",
         "/settings/:path*",
     ],
 };
