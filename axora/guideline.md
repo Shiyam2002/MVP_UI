@@ -430,7 +430,7 @@ export default api;
 ```ts
 import api from '@/lib/api';
 
-export interface LoginPayload {
+export interface SignInPayload {
   email: string;
   password: string;
 }
@@ -441,12 +441,12 @@ export interface AuthResponse {
 }
 
 export const authService = {
-  login: async (data: LoginPayload): Promise<AuthResponse> => {
+  login: async (data: SignInPayload): Promise<AuthResponse> => {
     const res = await api.post('/auth/login', data);
     return res.data;
   },
 
-  register: async (data: LoginPayload & { name: string }): Promise<AuthResponse> => {
+  register: async (data: SignInPayload & { name: string }): Promise<AuthResponse> => {
     const res = await api.post('/auth/register', data);
     return res.data;
   },
