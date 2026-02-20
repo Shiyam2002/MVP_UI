@@ -26,7 +26,8 @@ import {
   useSidebar,
 } from "@/src/components/ui/sidebar";
 
-import { AuthService } from "@/src/service/auth.service";
+import { AuthService } from "@/src/features/auth/auth.service";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function NavUser({
   user,
@@ -43,7 +44,6 @@ export function NavUser({
     try {
       await AuthService.logout();
     } catch (err) {
-      // optional: log error
       console.error("Logout failed", err);
     }
   };
@@ -59,12 +59,20 @@ export function NavUser({
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg">
+                  {user.name?.charAt(0)}
+                </AvatarFallback>
               </Avatar>
+
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate font-medium">
+                  {user.name}
+                </span>
+                <span className="truncate text-xs text-muted-foreground">
+                  {user.email}
+                </span>
               </div>
+
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
@@ -75,21 +83,29 @@ export function NavUser({
             align="end"
             sideOffset={4}
           >
+            {/* USER INFO */}
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarFallback className="rounded-lg">
+                    {user.name?.charAt(0)}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-medium">
+                    {user.name}
+                  </span>
+                  <span className="truncate text-xs text-muted-foreground">
+                    {user.email}
+                  </span>
                 </div>
               </div>
             </DropdownMenuLabel>
 
             <DropdownMenuSeparator />
 
+            {/* UPGRADE */}
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <Sparkles />
@@ -99,6 +115,7 @@ export function NavUser({
 
             <DropdownMenuSeparator />
 
+            {/* ACCOUNT */}
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <BadgeCheck />
@@ -116,7 +133,14 @@ export function NavUser({
 
             <DropdownMenuSeparator />
 
-            {/* ✅ LOGOUT */}
+            {/* 🌙 THEME SECTION */}
+              <div className="px-2 py-1.5 w-full">
+                <ThemeToggle />
+              </div>
+
+            <DropdownMenuSeparator />
+
+            {/* LOGOUT */}
             <DropdownMenuItem
               onClick={handleLogout}
               className="text-red-600 focus:text-red-600"
