@@ -1,9 +1,9 @@
-export interface LoginPayload {
+export interface SignInPayload {
     email: string;
     password: string;
 }
 
-export interface SignupPayload {
+export interface SignUpPayload {
     username: string;
     email: string;
     password: string;
