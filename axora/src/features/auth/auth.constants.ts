@@ -1,6 +1,8 @@
 export const AUTH_ROUTES = {
     LOGIN: "/auth/v1/authenticate",
-    SIGNUP: "/auth/v1/signup"
+    SIGNUP: "/auth/v1/signup",
+    CURRENT_USER: "/auth/v1/me",
+    LOGOUT: "/auth/v1/logout"
 };
 
 export const AUTH_ERROR_MESSAGES = {
