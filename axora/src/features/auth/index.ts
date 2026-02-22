@@ -1,5 +1,5 @@
-export * from "./auth.service";
-export * from "./auth.error";
+export * from "./auth.errors";
+export * from "./auth.services";
 export * from "./auth.types";
 export * from "./auth.constants";
 export * from "./hooks/useAuth";

@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { AuthService } from "../auth.service";
-import { AuthError } from "../auth.error";
+import { AuthService } from "../auth.services";
+import { AuthError } from "../auth.errors";
 import { AUTH_ERROR_MESSAGES } from "../auth.constants";
 import { SignInPayload, SignUpPayload } from "../auth.types";
 

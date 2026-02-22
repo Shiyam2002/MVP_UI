@@ -1,12 +1,20 @@
-import { apiPost, ApiError } from "@/src/lib/api";
+import { apiPost, ApiError, apiGet } from "@/src/lib/api";
 import { AUTH_ROUTES } from "./auth.constants";
-import { AuthError } from "./auth.error";
-import type { SignInPayload, SignUpPayload, AuthResponse } from "./auth.types";
+import { AuthError } from "./auth.errors";
+import {
+    type SignInPayload,
+    type SignUpPayload,
+    type AuthResponse,
+    type User,
+    UserSchema,
+    AuthResponseSchema,
+} from "./auth.types";
 
 export const AuthService = {
     async login(payload: SignInPayload): Promise<AuthResponse> {
         try {
-            return await apiPost(AUTH_ROUTES.LOGIN, payload);
+            const response = await apiPost(AUTH_ROUTES.LOGIN, payload);
+            return AuthResponseSchema.parse(response);
         } catch (error: unknown) {
             throw this.mapError(error);
         }
@@ -14,19 +22,28 @@ export const AuthService = {
 
     async signup(payload: SignUpPayload): Promise<AuthResponse> {
         try {
-            return await apiPost(AUTH_ROUTES.SIGNUP, payload);
+            const response = await apiPost(AUTH_ROUTES.SIGNUP, payload);
+            return AuthResponseSchema.parse(response);
+        } catch (error: unknown) {
+            throw this.mapError(error);
+        }
+    },
+
+    async getCurrentUser(): Promise<User> {
+        try {
+            const response = await apiGet(AUTH_ROUTES.CURRENT_USER);
+            return UserSchema.parse(response);
         } catch (error: unknown) {
             throw this.mapError(error);
         }
     },
 
     async logout(): Promise<void> {
-        window.location.href = "/";
-        // try {
-        //     await apiPost("/auth/v1/logout", {});
-        // } finally {
-        //     window.location.href = "/login";
-        // }
+        try {
+            await apiPost(AUTH_ROUTES.LOGOUT, {});
+        } finally {
+            window.location.href = "/";
+        }
     },
 
     mapError(error: unknown): Error {
